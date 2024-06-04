@@ -1,0 +1,28 @@
+.topnav {
+    display:flex;
+    align-items: center;
+    justify-content: left;
+    overflow: hidden;
+    background-color: white;
+    color: black;
+    box-shadow: 0px 0.5px #888888;
+  }
+  .Logo{
+    height: 100px;
+  }
+  .sticky{
+    position: fixed;
+    width: 100%;
+    top: 0;
+  }
+  @font-face {
+    font-family: 'CustomFont';
+    src: url('./Fonts/ABBvoice_W_Lt.woff') format('woff2'),
+         url('./Fonts/ABBvoice_W_Rg.woff') format('woff'),
+         url('./Fonts/ABBvoice_W_Rg.woff') format('truetype');
+  }
+  
+  body {
+    font-family: 'CustomFont', sans-serif;
+  }
+  
