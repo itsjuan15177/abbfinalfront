@@ -1,0 +1,8 @@
+.shipment-table th, .shipment-table td {
+    padding: 8px 20px; 
+  }
+  
+  .shipment-table {
+    border-collapse: separate;
+    border-spacing: 0 10px; 
+  }

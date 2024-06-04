@@ -1,30 +1,49 @@
 import React from "react";
+import "./TrackingList.css";
+import * as XLSX from "xlsx";
 
 const TrackingList = ({ status, shipmentData }) => {
-  // Ensure shipmentData is always an array to prevent map on undefined error
   const data = shipmentData || [];
-  // console.log(data[0].data.shipments[0].status.statusCode)
+  console.log("Data:", data);
+
+  const downloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Shipments");
+    XLSX.writeFile(workbook, "shipments.xlsx");
+  };
+
   return (
     <div>
       <h2>
         {status === "pending" ? "Pending Shipments" : "Delivered Shipments"}
       </h2>
+      {data.length > 0 && (
+        <button onClick={downloadExcel}>Download Excel</button>
+      )}
       {data.length === 0 ? (
         <p>No shipments to display</p>
       ) : (
-        <ul>
-          {data.map((shipment, index) => (
-            <li key={index}>
-              <strong>Order ID:</strong> {shipment.orderId}
-              <br />
-              <strong>Status:</strong> {shipment.status}
-              <br />
-              <strong>POD Date:</strong>{" "}
-              {shipment.ETA} <br />
-              {/* Adjust according to your data structure */}
-            </li>
-          ))}
-        </ul>
+        <table className="shipment-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Status</th>
+              <th>POD Date</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((shipment, index) => (
+              <tr key={index}>
+                <td>{shipment.orderId}</td>
+                <td>{shipment.status}</td>
+                <td>{shipment.ETA}</td>
+                <td>{shipment.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

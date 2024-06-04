@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Tabs, Tab, Box } from "@mui/material";
 import * as XLSX from "xlsx";
-import UserInput from "./UserInput";
 import TrackingList from "./TrackingList";
 
 function Main() {
@@ -15,7 +14,7 @@ function Main() {
 
   useEffect(() => {
     if (trackingInfo.length > 0) {
-      trackingInfo.forEach(info => {
+      trackingInfo.forEach((info) => {
         fetchData(info);
       });
     }
@@ -62,6 +61,7 @@ function Main() {
         const trackingInfos = slicedData.map((order) => ({
           courier_name: order.courier_name,
           tracking_no: order.tracking_number,
+          email: order.email, // Add this line to include email
         }));
         setTrackingInfo(trackingInfos);
       }
@@ -74,8 +74,7 @@ function Main() {
       api = "getDHL";
     } else if (trackingInfo.courier_name === "GEODIS") {
       api = "getGEODIS";
-    }
-    else return
+    } else return;
     try {
       const response = await fetch(
         `http://localhost:3001/${api}?orderId=${trackingInfo.tracking_no}`
@@ -142,8 +141,7 @@ function Main() {
         onChange={handleTabChange}
         aria-label="tracking tabs"
       >
-        <Tab label="Pending No." />
-        <Tab label="Delivered No." />
+        <Tab label="Shipments." />
       </Tabs>
       <Box>
         {tabValue === 0 && (
